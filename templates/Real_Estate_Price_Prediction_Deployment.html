@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>ML Deployment</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='Real_Estate_Price_Prediction_Deployment_.css') }}">
+  <style>
+    
+      #predict { 
+            position: absolute;
+            top: 25%;
+            left: 47%;
+            margin: -150px 0 0 -150px;
+            width:400px;
+            height:400px;
+        }
+      
+      body { 
+            width: 100%;
+            height:100%;
+            font-family: 'Open Sans', sans-serif;
+            background: #092756;
+            color: #fff;
+            font-size: 18px;
+            text-align:center;
+            letter-spacing:1.2px;
+            background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.1)), url('https://bit.ly/3Agc3PK');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;width:100%;
+            backdrop-filter: blur(3px);
+            height: 100vh;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+      
+     select,input {
+
+            width: 100%; 
+            margin-bottom: 10px; 
+            background-color:#dff4ff;
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 13px;
+            color: rgba(10,10,10,1);
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,0,0,0.3);
+            border-radius: 4px;
+            box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
+            -webkit-transition: box-shadow .5s ease;
+            -moz-transition: box-shadow .5s ease;
+            -o-transition: box-shadow .5s ease;
+            -ms-transition: box-shadow .5s ease;
+            transition: box-shadow .5s ease; 
+
+        }
+      
+      select:focus,input:focus {
+          
+           box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); 
+          
+      }
+      
+  </style>
+</head>
+<body>
+ <div class="login" id="predict">
+    <h1>Predict House Price</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict') }}"method="post">
+        <select name="posted_by" required>
+            <option value="" style="color:red;" disabled selected hidden class="default_select">Select - Posted By</option>
+            <option value="Owner">Owner</option>
+            <option value="Dealer">Dealer</option>
+            <option value="Builder">Builder</option>
+        </select>
+        <br>
+        <select name="under_cons" required>
+            <option value="" disabled selected hidden class="default_select">Select - is this Under Construction</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br>
+        <select name="rera" required>
+            <option value="" disabled selected hidden class="default_select">Select - is this RERA House</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br>
+         <select name="bed_no" required>
+            <option value="" disabled selected hidden class="default_select">Select - Number of bedrooms</option>
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+            <option value=9>9</option>
+            <option value=10>10</option>
+            <option value=11>11</option>
+            <option value=12>12</option>
+            <option value=13>13</option>
+            <option value=14>14</option>
+            <option value=15>15</option>
+            <option value=16>16</option>
+            <option value=17>17</option>
+            <option value=18>18</option>
+            <option value=19>19</option>
+            <option value=20>20</option>
+        </select><br>
+
+        <select name="bhkorrk" required>
+            <option value="" disabled selected hidden class="default_select">Select - is this BHK or RK type</option>
+            <option value="BHK">BHK</option>
+            <option value="RK">RK</option>
+        </select><br>
+        <select name="ready" required>
+            <option value="" disabled selected hidden class="default_select">Select - is this Ready to Move</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br>
+        <select name="resale" required>
+            <option value="" disabled selected hidden class="default_select">Select - type Resale or not</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br>
+
+        <select name="cities" required>
+            <option value="" disabled selected hidden class="default_select">Select the City</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Bhiwadi">Bhiwadi</option>
+            <option value="Bhopal">Bhopal</option>
+            <option value="Bhubaneswar">Bhubaneswar</option>
+            <option value="Chandigarh">Chandigarh</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Coimbatore">Coimbatore</option>
+            <option value="Dehraun">Dehraun</option>
+            <option value="Faridabad">Faridabad</option>
+            <option value="Gandhinagar">Gandhinagar</option>
+            <option value="Ghaziabad">Ghaziabad</option>
+            <option value="Goa">Goa</option>
+            <option value="Gurgaon">Gurgaon</option>
+            <option value="Indore">Indore</option>
+            <option value="Jaipur">Jaipur</option>
+            <option value="Kochi">Kochi</option>
+            <option value="Kolkata">Kolkata</option>
+            <option value="Lalitpur">Lalitpur</option>
+            <option value="Lucknow">Lucknow</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Mangalore">Mangalore</option>
+            <option value="Mohali">Mohali</option>
+            <option value="Mohali">Mumbai</option>
+            <option value="Nagpur">Nagpur</option>
+            <option value="Noida">Noida</option>
+            <option value="Palghar">Palghar</option>
+            <option value="Pune">Pune</option>
+            <option value="Ranchi">Ranchi</option>
+            <option value="Secunderabad">Secunderabad</option>
+            <option value="Sonipat">Sonipat</option>
+            <option value="Surat">Surat</option>
+            <option value="Vadodara">Vadodara</option>
+            <option value="Visakhapatnam">Visakhapatnam</option> 
+            <option value="Other">Others</option>           
+        </select>
+        <input type="text" name="area" placeholder="Enter Area of the House (Square ft)" required="required" />
+        
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+
+   <h4> {{ prediction }} </h4>
+ </div>
+</body>
+</html>
